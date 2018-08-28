@@ -1,0 +1,63 @@
+= Application Autoscaling
+
+== Goal
+
+In this section you will leverage Pivotal's Autoscaling Service to scale your microservice.
+
+== Exercise
+
+=== Configuring Autoscaling
+
+. Review the documentation on link:http://docs.pivotal.io/pivotalcf/autoscaling[Autoscaling]
+
+. Follow the instructions on link:http://docs.pivotal.io/pivotalcf/autoscaling/create-bind-from-console.html[Autoscaling binding from the Console] to create a new instance and bind it to your microservice.
++
+* Be sure to name your service instance: <first-initial><last-initial>-cities-service-autoscaler
+* The autoscale service requires configuration through the service dashboard.  For this reason, we opt to create it through the console as well.
+
+. Launch the autoscaling dashboard for your service.
+
+. In the autoscale parameters, reduce the high threshold to %50 to have scaling happen faster.
+
+=== Set memory to ensure scaling will happen
+
+Be sure to set the memory allocation for your application to 650M to ensure the application will scale.
+
+=== Generating Load and Observing Results
+
+. link:http://jmeter.apache.org/download_jmeter.cgi[Apache JMeter] Can be used to generate load.
+
+. Use the following link:https://raw.githubusercontent.com/gtantachuco-pivotal/pivotal-student2/master/cities/src/test/cities-load-generator.jmx[JMeter script] as a starting point. 
+
+
++
+[source,bash]
+----
+$ wget https://raw.githubusercontent.com/gtantachuco-pivotal/pivotal-student2/master/cities/src/test/cities-load-generator.jmx 
+----
+
+
+. Open the 'cities-load-generator.jmx' in the JMeter GUI.
+
+. Expand the content of the JMeter test plan by: i) selecting the 'Load Generator' test plan on the left pane; and, ii) going to the menu: 'Option -> Expand All'
+
+. Edit the test plan to use your application's URL. To do so, change the 'Server Name or IP' field on the 'HTTP Request Defaults' item.
+
+. Save the test plan: 'File -> Save'
+
+. Run the test plan: 'Run -> Start'
+
+. Use both the developer console and the auto-scale console to observe your service scale up and back down based on load. [Optional] See app metrics on the App Dynamics' console.
+
+. Stop the test plan: 'Run -> Stop'
+
+== Checking your work
+
+. An autoscaling service instance should show correctly under the VCAP_SERVICES environment variable.
++
+[source,bash]
+----
+$ cf env <first-inital><last-initial>-cities-service
+----
+
+. Your app should scale up when the jmeter script is executed and back down after the script completes.

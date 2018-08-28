@@ -1,0 +1,62 @@
+= Pivotal Install Configure & Manage Training
+
+== Survey Link 
+
+https://www.surveymonkey.com/s/32T57W2
+
+== Prerequisites
+
+=== Pivotal Academy
+
+Students will have completed the following courses on Pivotal Academy:
+
+* link:https://pivotalpartners.biglms.com/courses/Partners/Pivotal100/VWN/about[Pivotal100]: Introduction to Pivotal
+* link:https://pivotalpartners.biglms.com/courses/PivotalU/CF200/VWZP/about[CF200]: Pivotal CF Getting Started
+
+=== Agenda
+
+. link:kick-off/README.adoc[Kick Off]
+** Introductions
+** Session Expectations
+** Pre-requisite Validation
+
+. link:overview/README.adoc[Pivotal CF Overview]
+** Intro to Pivotal CF
+** Technical Overview
+** Resources
+
+. link:operations/README.adoc[The Operator Experience]
+** Installing Pivotal CF
+** Managing Products with Ops Manager
+** Scaling the platform
+** PaaS monitoring
+** Backing up Pivotal CF
+** Bosh basics & troubleshooting
+** Orgs, spaces, users & quotas
+** Application Security Groups
+
+. link:dev-experience/README.adoc[The Developer Experience]
+** Pushing apps
+** Using Manifests
+** Health, logging & events via the CLI 
+** Binding to services
+** Environment variables -- Speed Up
+** Scaling apps
+** App log aggregation via a User Provided Service Instance
+** Remote debugging
+** Application Autoscaling Overivew
+** Continuous Delivery Demo
+
+. link:scaling-platform/README.adoc[Scaling The Platform]
+
+. link:buildpack/README.adoc[Customizing Build Packs]: Customize a build pack and use it to deploy your micro service. -- Have the build pack ready.
+
+. link:service-broker/README.adoc[Creating a Custom Service Broker]: Pair to create a custom service and bind it to your micro service. --  We have trimmed "development" tasks & will supply the artifact for you.
+
+== Material Format Philosophy
+
+* Presentations introduce concepts.  They do not provide detail and never reformat the same content available on the docs site as bullets.  I bullets are boring and instead I favor animation.  Well rehearsed animation illustrates and explains concepts with very few words (see Onsi’s talk on Diego at CF Summit).
+
+* Docs are for detail.  I want students to get in the habit of reading and referring to the docs site.  I added open book "quizzes" to the curriculum to ensure they do this while going through the class.
+
+* Asciidoc docs in git define the course, links and work.  They are easy to edit, format and navigate.

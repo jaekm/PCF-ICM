@@ -1,0 +1,9 @@
+=== The Developer Console
+
+. Review the documentation on the link: http://docs.pivotal.io/pivotalcf/console/dev-console.html[Console]
+
+. Log into the developer console of your Pivotal CF instance.
+
+. Install the CLI as we will be using it later. If you do not have suffficent permission to install to your laptop, install to your jump box.
+
+. Explore.

@@ -1,0 +1,96 @@
+= Service Brokers
+
+== Goal
+
+In this section, students will deploy a custom service broker.
+
+. The haash-broker implements a HashMap as a Service
+
+. Deploy the Service Broker as an app to Cloud Foundry
+
+. Register the Broker with the Cloud Controller
+
+. Make the single plan in the catalog “public”
+
+. Create an instance of your service
+
+. Push and bind a test app to your service instance
+
+. Test the app’s interaction with the service
+
+
+== Exercise
+
+. Review the documentation on link:http://docs.pivotal.io/pivotalcf/services/[Creating Custom Services]
+
+=== Overview
+
+The Service Broker for this lab is for a service called HashMap as a Service (HaaSh). It wraps a minimal REST API around a Java HashMap implementation, and each service creation event results in a newly allocated Map.
+
+=== haash-broker
+* Download the hash broker
+** https://s3-us-west-1.amazonaws.com/pcf-icm/haash-broker.jar
+* Push the broker as an app to CF.  Use the name: <first-initial><last-initial>-haash-broker
+
+* Register the broker with the cloud controller:
++
+[source,bash]
+----
+$ cf create-service-broker ...
+----
++
+The username & password you need for the broker are warreng/natedogg (regulate!)
+
+* Next, you need to make the plan public:
++
+[source,bash]
+----
+$ cf enable-service-access ...
+----
++
+You will need to figure out the plan name.  You can do this by accessing your service broker's catalog from a browser or the cli. <broker url>/v2/catalog and look for name in the services array ("HaaSh")
+
+* Verify you can see your new service in the marketplace.  There is a cf command for this
+
+* Create a new instance of your service using the CF commands.  Name the instance <first-initial><last-initial>-haash-service.
+
+=== Haash Client
+
+* Create a manifest for your haash-client.
+
+* Be sure to connect the haash-client to the service instance you created above.
+
+* Download the haash-client from S3.
+** https://s3-us-west-1.amazonaws.com/pcf-icm/haash-client.jar
+
+* Push the haash-client to cf and name it: <first-initial><last-initial>-haash-client
+
+* Curl your haash client to be sure it is working and using your haash-service
++
+You can add key,value pairs using:
++
+[source,bash]
+----
+$ curl <your haash-client>/HaaSh/<key> -d '<some value>' -X PUT
+----
++
+
+* You can retrieve the values:
++
+[source,bash]
+----
+$ curl <your haash-client>/HaaSh/<key>
+----
++
+
+
+== Beyond the class
+
+There are many community resources to help you build your own more robust service broker.
+
+* Spring developers can use the link:https://github.com/cloudfoundry-community/spring-boot-cf-service-broker[Spring Boot CF Service Broker]
+* PCF Needs additional data to make the console show your service see link:http://docs.pivotal.io/pivotalcf/services/catalog-metadata.html#example-broker-response[catalog metadata] in the docs.
+
+* You following repositories can be used as a reference:
+** link:https://github.com/cloudfoundry-community/s3-cf-service-broker[S3 CF Service Broker]
+** link:https://github.com/spgreenberg/spring-boot-cf-service-broker-mongo[Spring Boot CF Service Broker Mongo]

@@ -1,0 +1,37 @@
+= Application Log Draining
+
+In this section, you will configure application log draining into a log analysis tool.  We will use the free Papertrail logging service, but any tool that supports tcp syslog draining can be used.
+
+== How it Works
+
+. Review the log draining documentation here: http://docs.pivotal.io/pivotalcf/devguide/services/log-management.html
+
+== VMware vRealize Log Insight 
+
+. Create a user provided service for the app to drain its log into `cf cups my-logsvc -l syslog://192.168.5.250:514`
+
+. Be sure to add your new User Provided Service to your microservice manifest.
+
+. After you have bound and restarted your microservice, perform a few curl requests and ensure logs are draining into Log Insight.
+
+=== Evaluation
+
+. Review the details on log formats: http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/streaming-logs.html#format
+
+. How do you see only logs related to application staging?
+
+. How can you view logs for a specific application instance?
+
+. Why didn't you have to add an application security group rule?
+
+. How would you prevent log draining to an external service?
+
+
+== Other External Tools
+
+Many tcp syslog compliant log tools can be used with CloudFoundry.  A few popular tools are:
+
+. VMware vRealize Log Insight
+. Splunk Enterprise
+. Logstash w/ Elastic Search & Kibana
+. More: http://docs.run.pivotal.io/devguide/services/log-management-thirdparty-svc.html

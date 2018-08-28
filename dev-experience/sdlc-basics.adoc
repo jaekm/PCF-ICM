@@ -1,0 +1,129 @@
+= SDLC Basics
+
+== Pushing to Cloud Foundry
+
+=== Pushing via CLI
+
+Use `cf help` and/or `cf <command> --help` for details on each of the commands below.
+
+. Review the docs: http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/deploy-app.html
+
+. Verify you are logged in and targeted to your PCF instance:
++
+[source,bash]
+----
+$ cf target
+----
+
+. Push the cities-service:
++
+[source,bash]
+----
+$ cf push <your_app> -i 1 -m 512M -p cities-service.jar
+----
++
+* Be sure to name your application '<first-initial><last-initial>-cities-service'
+
+Your app should have crashed because it can't find a database. So now we need to bind a service to your application to provide the database. 
+
+
+== Binding A Production Database to your App
+
+. Review the docs on Services:
++
+* link:http://docs.pivotal.io/pivotalcf/devguide/services/adding-a-service.html[Adding a Service]
+* link:http://docs.pivotal.io/pivotalcf/devguide/services/managing-services.html[Managing Services]
++
+
+. Create a mysql service instance from the market place
+
+. Launch the DB console via the `Manage` link in the Users Console.  Note the database is empty.
+
+=== Manually Binding the Service Instance
+
+. Review the docs on link:http://docs.pivotal.io/pivotalcf/devguide/services/bind-service.html[Binding a Service Instance]
+
+. Bind the instance to your app
+
+. Restage your application to inject the new database.
+
+. Did it work?  Why not?
+
+=== Environment Variables
+
+It looks like we need to modify our security group to allow egress.  But how do you know what endpoint is needed?
+
+. Review the document on Environment Variables: http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/environment-variable.html
+
+. QUESTION: What variable shows your mysql service instance?
+
+. Modify your space security group (not the running-security-group) to allow egress to the bound mysql 
+
+. Now, restart and verify you can access your application via a curl request:
+
++
+[source,bash]
+----
+$ curl -i <your-app>/cities
+----
+
+=== Using Manifests
+
+Now, use a manifest to help automate deployment.
+
+. Review the documentation: http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/manifest.html
+
+. Create an application manifest called `manifest.yml` in the same directory as your jar file.  Minimally, you must set the name of the app, the amount of memory, the number of instances, and the path to the .jar file.
++
+*Be sure to name your application '<first-initial><last-initial>-cities-service' and use this as the host value.*
++
+We should be able to access your application at https://<first-initial><last-initial>-cities-service.YOUR_PCF_APP_DOMAIN
+
+
+==== Binding via the Manifest
+
+. Add the services binding to your deployment manifest and repush the app by running `cf push` with no parameters.
+
+. Verify you can access your application via a curl request:
++
+[source,bash]
+----
+$ curl -i <your-app>/cities
+----
+
+. In the developer console, navigate to the manage tab for the database associated with your application and checkout the avaliable information.
+
+== Scaling
+
+Apps can be scaled via the CLI or the Console.
+
+=== Vertical Scale
+
+. Increase your app memory to 1G.
+
+. QUESTION: What happens?  How long does it take?  Why?
+
+. Scale your app memory back down to 512M.
+
+=== Horizontal Scale
+
+. Scale your app to 2 instances.
+
+. QUESTION: What happens?  How long does it take?  Why?
+
+. Attempt to Scale your app to 20 instances
+
+. QUESTION: What happens?  Why? How would you increase quota & or DEA Capacity to allow?  
+.. Check with Instructors for GreenLight on any recommended PCF Foundation Scale operations.
+
+== User Provided Service Instances & Tags
+
+. Instructor led conversatioin and demo about what a userprovided service is. 
+
+== Additional References
+Let's create the service.
+
+Application technology references for how the cities app is built:
+
+* link:http://projects.spring.io/spring-cloud/[Spring Cloud]
+* link:http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/annotation/Profile.html[Spring Profiles]

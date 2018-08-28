@@ -1,0 +1,107 @@
+= Monitoring Pivotal CF
+
+We will configure PaaS monitoring via JMX and drain PCF system logs into a 3rd party log analysis tool.
+
+
+== Retrieving logs via Ops Manager
+
+. In Ops Manager, select `Elastic Runtime` > `Status`
+
+. Review the status information
+
+. Request the logs for HA Proxy
+
+. Download the logs from the `Logs` tab and take a look. You should see all of the requests that hit the front end of your CF install. 
+
+
+== Installation & Configuration
+
+Configure Ops Metrics and Syslog draining before deploying changes in Ops Manager.
+
+
+=== Ops Metrics
+
+In this section, you will install and configure the Ops Metrics tile.
+
+. Follow all steps except for Steps(6, 12-15) to install & configure Ops Metrics: http://docs.pivotal.io/pivotalcf/customizing/deploy-metrics.html
+
+. DO NOT enable SSL!!!! in the Ops Metrics tile.  This step is optional and jvisualvm won't be able to connect.
+. DO NOT `Apply Changes` until after Syslog Draining has been configured
+
+
+
+=== Syslog Draining
+
+. In this environment you will utilize a local instance of VMware Log Insight to 'ingest' syslog data from the PCF Foundation
+
+. In Ops Manager,  select `Elastic Runtime` > `External Endpoints`
+
+. Enter `192.168.5.250` as the Syslog Aggregator, `514` as theport, & `TCP` as the protocol 
+
+=== Apply changes
+
+. Before applying changes: Select `Lifecycle Errands` from the `Elastic Runtime` tile.  Uncheck all of the post install errands.  This will speed up the update by ensuring these errands are not re-run.
+
+. From the Ops Manager dashboard, apply your changes.
+
+
+== Monitoring
+
+
+=== Monitoring with Java VisualVM
+
+*To avoid adding a firewall mapping, we will connect to the Ops Metrics service from the JumpBox.*
+
+Java VisualVM ships with the JDK.  It provides the ability to drill into MBeans, but does not provide graphical and time based analysis.
+
+. Launch Java VisualVM from a terminal window on the JumpBox:
++
+[source,bash]
+----
+$ jvisualvm    (C:\Program Files\Java\jdk1.8.0_25\bin)
+----
+
+. The MBeans tool plugin should already be installed, to verify goto (Select `Tools` > `Plugins` > `Installed` > `VisualVM-MBeans` )
+..      If not installed , goto  (Select `Tools` > `Plugins` > `Available Plugins` > `VisualVM-MBeans` > `Install`) to install
+
+. From the left side bar, select `Remote`
+
+. Enter the IP of your Ops Metrics VM (available in Ops Manager).  Click `OK`.
+
+. Right click the new Remote host and select `Add JMX Connection`.
++
+. Set the port to 44444
+. Check `Use Security Credentials` and enter the user/pwd you set up in the Ops Metrics tile
+. Select `Save Security Credentials`
+. Select `Do not require SSL connection`
+. Click `Ok`
++
+
+. In the left side bar, double click the new JMX remote endpoint and select the `MBeans` tab
+
+. Metrics will be under `org.cloudfoundry`
+
+. Be sure to save your configuration in jvisualvm
+
+
+=== Using VMware Log Insight
+
+. A local instance of `VMware vRealize Log Insight` has been provided for each lab and will be the syslog aggregator for all logging tasks in your PCF labs.  You can familiarize yourslef with the tool link:PCF-VMware-Log-Insight.pdf[PCF & Log Insight]
+
+
+
+=== Beyond the class
+
+==== Ops Metrics
+
+. Review the documentation on Using Ops Metrics: http://docs.pivotal.io/pivotalcf/customizing/use-metrics.html
+
+. Java VisualVM does not provide real time charts of MBeans.  Consider a more robust JMX solution like AppDynamics, NewRelic, Splunk, or Hyperic.
+
+==== Splunk Enterprise
+
+If you would like to use Splunk on your PCF instances, see link:http://docs.run.pivotal.io/devguide/services/integrate-splunk.html[Integrating Splunk] to install the correct log formatting tools for PCF.
+
+==== Firehose
+
+The first version of the link:https://groups.google.com/a/cloudfoundry.org/forum/#!msg/vcap-dev/FE_w5xDG-dg/EPoUMY_B3JkJ[firehose] was just released as part of cf-release (OSS).

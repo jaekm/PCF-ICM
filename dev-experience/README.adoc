@@ -1,0 +1,44 @@
+= Developer Experience
+
+== Goals
+
+To deploy and configure a microservice and it's UI, leverage the platform for monitoring & management of the microservice, and automate a continuous delivery pipeline.
+
+== Exercises
+
+Before we do anything lets take a look at the developer console and confirm install of the Cloud Foundry CLI on our laptops/desktops. 
+
+* link:user-console.adoc[User Console]
+
+Bring on the applications!  
+
+* For this section of the class we will use an example application. Find and download the cities jars at the following locations. 
+
+** https://s3-us-west-1.amazonaws.com/pcf-icm/cities-service.jar
+
+=== Applications on Pivotal CF
+
+* Review the documentation on link:http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/streaming-logs.html#writing[Writing to logs]
+
+* link:sdlc-basics.adoc[SDLC Basics]
+** Pushing apps
+** Using Manifests
+** Dependency Injection in Spring
+** Health, logging & events via the CLI
+** Binding to services
+** Environment variables
+** Scaling apps
+
+The following exercises should be completed for `cities-service`.
+
+* link:app-log-drain.adoc[Application Log Draining]
+
+NOTE: From a time perspective, and an operator concern section do we need app autoscaling? Is it something we should just talk to? The lab takes quite a bit of time because they need jMeter etc. 
+
+* link:app-autoscaling.adoc[Application Autoscaling]
+
+* link:../continuous-delivery/README.adoc[Continuous Delivery]
+
+=== Additional References
+
+* Pivotal documentation on link:http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/prepare-to-deploy.html[Considerations for Designing and Running an Application in the Cloud]

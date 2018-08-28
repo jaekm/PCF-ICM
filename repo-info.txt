@@ -1,0 +1,10 @@
+github user CTL-ICM
+github pass make1thappen
+
+https://github.com/krujos/CTL-ICM
+
+Warning: CTL-ICM has push access to the repo. 
+With great power comes great responsibility.
+
+Doc Sharing Link
+https://docs.google.com/spreadsheets/d/1h_OJ7720xifaSeSxn3GLq0Zx_luObOM6DBfqVrXn-ls/edit?usp=sharing

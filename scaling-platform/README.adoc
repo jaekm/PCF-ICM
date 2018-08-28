@@ -1,0 +1,40 @@
+= Scaling The Platform
+
+In this section we will intentionally run your envornment out of capacity to demonstrate how the platform handles this error. Since your working in pairs, do this excercise together, if you both do it you'll likley run your blade out of resources. 
+
+== Ensure that you only have one DEA running
+
+. Open OpsManager 
+. Select the Elastic Runtime Tile
+. Navigate to Status 
+. Make sure you have one DEA
+.. If you have more than one notify an instructor, based on time constraints we'll figure out what to do.
+
+== Break it
+
+Scale in increments of 5 and watch what happens. Tail the logs for your application in another window or scale in the console and watch them there.
+
+[source,bash]
+----
+$ cf scale -i 5 <your app>
+$ cf scale -i 10 <your app>
+...
+$ cf scale -i 25 <your app>
+----
+
+How did it fail? What can we do about it?
+
+== Add a new DEA
+
+. Open OpsManager 
+. Select the Elastic Runtime Tile
+. Navigate to the Settings tab 
+. Select Resource Config
+. Bump the number of DEA's to 2
+. Select Lifecycle Errands
+. Uncheck all of the errands (this makes the deploy go faster)
+. Repeate the Lifecycle Errands disabling for all of your tiles. 
+. This would be an excellent time for a cup of coffee. 
+
+While the deploy is happening, interact with your applications. Did you take any downtime? 
+

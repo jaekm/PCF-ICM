@@ -1,0 +1,15 @@
+= Set-up
+
+== Instructor Notes
+
+Note on pace, approach, etc.  Anything that might be useful to class delivery.
+
+link:instructor-notes.adoc[Instructor Notes]
+
+== Pre-class setup
+
+What do you need to do before a class starts?
+
+* link:environment-setup.adoc[Environment Set up]
+
+* link:pre-class-setup.adoc[Pre-Class Set Up]

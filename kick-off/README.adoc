@@ -1,0 +1,17 @@
+= Kick Off
+
+== Expectations, Hopes, Fears: 
+
+. This course is hands on. 
+. We have half as many systems as we do people, so we will work in pairs. 
+.. After the install, you will create your own orgs and spaces
+... So your pairs, and tennants. 
+
+. We will try not to kill you with power point
+. We will intentionally break things
+. Zach, Merlin and Josh will be here to help, just shout
+.. Also, use your colleauges for help, we leave, they don't.
+
+== Logistics
+
+link:KickOff.key[Kick Off Logistics]
